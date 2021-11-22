@@ -30,7 +30,7 @@ public class StatisticCollector {
             try {
                 return el.get().getTime();
             } catch (Exception e){
-                System.out.println("--- ERROR ---");
+                System.out.println("ERROR!");
                 return 0;
             }
         }).sum() / results.size());
@@ -39,7 +39,7 @@ public class StatisticCollector {
             try {
                 return el.get().getQueueSize();
             } catch (Exception e){
-                System.out.println("--- ERROR ---");
+                System.out.println("ERROR!");
                 return 0;
             }
         }).sum() / results.size());
@@ -56,11 +56,11 @@ public class StatisticCollector {
         double sum1 = 0;
         int sum2 = 0;
 
-        for (int i = 0; i < results.size(); i++) {
-            if (results.get(i).isDone()) {
+        for (Future<Result> result : results) {
+            if (result.isDone()) {
                 size++;
-                sum2 += results.get(i).get().getQueueSize();
-                sum1 += results.get(i).get().getTime();
+                sum2 += result.get().getQueueSize();
+                sum1 += result.get().getTime();
             }
         }
 
